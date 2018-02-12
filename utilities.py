@@ -43,12 +43,3 @@ def get_file_extension_count(directory, file_extension):
             if file.endswith("." + file_extension):
                 file_count += 1
     return file_count
-
-
-def convert_comics_recursive(rootdir):
-    for root, subdirs, files in os.walk(rootdir):
-        for file in os.listdir(root):
-            if file.endswith(".zip") or file.endswith(".rar"):
-                file_name = file[:len(file) - 4]
-                print(file_name)
-                os.rename(root + "\\" + file, root + "\\" + file_name + ".cbz")

@@ -1,23 +1,28 @@
-import spice_api as spice
-import requests
-import os
-
-mal_username = ""
-mal_password = ""
-manga_directories = [""]
-
-credentials = spice.init_auth(mal_username, mal_password)
-
 """
-Goes through a the directories labeled as manga directories and attempts to download covers from myanimelist.com for 
+Goes through a the directories labeled as manga directories and attempts to download covers from myanimelist.com for
 mangas that do not already have one. Manga that could not be found are skipped.
 
 """
 
+import spice_api as spice
+import requests
+import os
+import sys
+
+
+default_manga_directories = [""]
+manga_directories = []
+if len(sys.argv == 1):
+    manga_directories = default_manga_directories
+else:
+    for arg in sys.argv:
+        manga_directories.append(arg)
+
+mal_username = ""
+mal_password = ""
+credentials = spice.init_auth(mal_username, mal_password)
+
 for directory in manga_directories:
-
-
-
     no_results = []
     processed = []
     already_processed = []
@@ -33,9 +38,6 @@ for directory in manga_directories:
                 processed.append(manga)
             else:
                 no_results.append(manga)
-        else:
-            if manga != "desktop.ini":
-                already_processed.append(manga)
 print(already_processed)
 print("The following manga covers were downloaded:")
 for manga in processed:
@@ -43,4 +45,3 @@ for manga in processed:
 print("No covers were found for these manga. Please recheck the title or find a cover manually.")
 for manga in no_results:
     print(manga)
-
