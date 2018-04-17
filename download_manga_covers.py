@@ -11,12 +11,12 @@ import sys
 
 
 default_manga_directories = [""]
-manga_directories = []
-if len(sys.argv == 1):
-    manga_directories = default_manga_directories
-else:
-    for arg in sys.argv:
-        manga_directories.append(arg)
+manga_directories = ["G:/Manga"]
+# if len(sys.argv == 1):
+#     manga_directories = default_manga_directories
+# else:
+#     for arg in sys.argv:
+#         manga_directories.append(arg)
 
 mal_username = ""
 mal_password = ""

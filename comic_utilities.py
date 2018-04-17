@@ -1,7 +1,20 @@
+#!/usr/bin/python
 import os
+import sys
 
+
+def usage():
+    print("Usage:" + sys.argv[0] + "<directory> [-r]")
 
 def convert_comics(directory):
+    """
+    Goes a directory to convert any files of supported formatss to .cbz files.
+
+    Support file formats: .zip, .rar, .7z, .cbr
+
+    :param directory: The directory to go through.
+    :return:
+    """
     for file in os.listdir(directory):
         if file.endswith(".zip") or file.endswith(".rar"):
             file_name = file[:len(file) - 4]
@@ -13,9 +26,8 @@ def convert_comics_recursive(rootdir):
     """
     Goes through a root directory and any subfolders to convert any files of supported formats to .cbz files.
     Support file formats: .zip, .rar, .7z, .cbr
-    Note: There should still be manual inspections of the files converted to check for any discrepancies.
 
-    :param rootdir:
+    :param rootdir: The root directory to go through. Will go through any subdirectories.
     :return:
     """
 
@@ -27,18 +39,14 @@ def convert_comics_recursive(rootdir):
                 os.rename(root + "\\" + file, root + "\\" + file_name + ".cbz")
 
 
-def rename(directory):
-    for comic in os.listdir(directory):
-        parts = comic[0: len(comic) - 4].split(" - ")
-        print(parts)
-
-        old = directory + "\\" + comic
-        print(old)
-        new = directory + "\\"
-        for x in range(1, len(parts)):
-            new += parts[x]
-            if not x == len(parts) - 1:
-                new += " - "
-        new += " [" + parts[0] + "].cbz"
-        print(new)
-        os.rename(old,new)
+if __name__ == "__main__":
+    if len(sys.argv) != 2 and sys.argv != 3:
+        usage()
+    else:
+        if len(sys.argv) == 2:
+            convert_comics(sys.argv[1])
+        if len(sys.argv) == 3:
+            if sys.argv[2] != "-r":
+                usage()
+            else:
+                convert_comics_recursive(sys.argv[1])
